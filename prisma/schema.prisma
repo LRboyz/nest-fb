@@ -10,14 +10,51 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// prisma/schema.prisma
+// 发布状态枚举
+enum PublishState {
+  Draft      // 草稿
+  Published  // 已发布
+  Recycle    // 回收站
+}
+
+// 文章来源枚举
+enum OriginState {
+  Original // 原创
+  Reprint  // 转债
+  Hybird   // 混合
+}
+
+enum PublicState {
+  Public  // 公开
+  Secret  // 私密
+  Reserve // 保留
+}
+
+enum SortType {
+  Asc      // 升序
+  Desc     // 降序
+  Hottest  // 热序
+}
+
+enum Language {
+  English 
+  Chinese
+}
+
 
 model Article {
   id          Int      @id @default(autoincrement())
   title       String   @unique
   description String?
   body        String
-  published   Boolean  @default(false)
+  keywords    String[]
+  thumb       String
+  lang        Language 
+  origin      OriginState
+  published   PublishState @default(Draft)
+  disabled_comment Boolean
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  extends     Json[]
 }
+

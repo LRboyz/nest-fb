@@ -1,17 +1,17 @@
-// import { PrismaService } from '@app/providers/prisma/prisma.service';
+import { PrismaService } from '@app/modules/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 
 @Injectable()
 export class ArticleService {
-  // constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) {}
   create(createArticleDto: CreateArticleDto) {
-    return 'This action adds a new article';
+    return this.prisma.article.create({ data: createArticleDto });
   }
 
   findAll() {
-    // this.prisma.article.findMany({ where: { published: true } });
+    this.prisma.article.findMany({ where: { published: true } });
   }
 
   findOne(id: number) {
@@ -19,7 +19,10 @@ export class ArticleService {
   }
 
   update(id: number, updateArticleDto: UpdateArticleDto) {
-    return `This action updates a #${id} article`;
+    return this.prisma.article.update({
+      where: { id },
+      data: updateArticleDto,
+    });
   }
 
   remove(id: number) {

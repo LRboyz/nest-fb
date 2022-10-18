@@ -4,8 +4,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { AppController } from './app.controller';
 import { LoggingInterceptor } from './interceptors/logging.interceptor';
 import { ArticleModule } from './modules/article/article.module';
-
-import { PrismaModule } from './providers/prisma/prisma.module';
+import { PrismaModule } from './modules/prisma/prisma.module';
 
 @Module({
   imports: [ArticleModule, PrismaModule],
